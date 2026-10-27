@@ -1,3 +1,4 @@
+
 package com.mrudul.tourandtravel.controller;
 
 import com.mrudul.tourandtravel.dto.request.TourPackageRequest;
@@ -17,10 +18,8 @@ public class TourPackageController {
     private final TourPackageService tourPackageService;
 
     public TourPackageController(TourPackageService tourPackageService) {
-
         this.tourPackageService = tourPackageService;
     }
-
 
     @PostMapping
     public ResponseEntity<TourPackage> createPackage(
@@ -29,21 +28,20 @@ public class TourPackageController {
         TourPackage savedPackage =
                 tourPackageService.createPackage(request);
 
-        return new ResponseEntity<>(
-                savedPackage,
-                HttpStatus.CREATED
-        );
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(savedPackage);
     }
 
     @GetMapping("/{packageId}")
     public ResponseEntity<TourPackageResponse> getPackageById(
             @PathVariable Integer packageId) {
 
-        TourPackageResponse response = tourPackageService.getPackageById(packageId);
+        TourPackageResponse response =
+                tourPackageService.getPackageById(packageId);
 
         return ResponseEntity.ok(response);
     }
-
 
     @GetMapping
     public ResponseEntity<List<TourPackageResponse>> getAllPackages() {
@@ -53,7 +51,6 @@ public class TourPackageController {
 
         return ResponseEntity.ok(responses);
     }
-
 
     @GetMapping("/search/keyword")
     public ResponseEntity<List<TourPackageResponse>> searchPackagesByKeyword(
